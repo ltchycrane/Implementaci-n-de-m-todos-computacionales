@@ -61,9 +61,8 @@ int transitionMatrix[19][15] =
   }; //Matriz de transiciones.
 ``` 
 # Automata del problema
-``` bash
+![WhatsApp Image 2022-04-03 at 11 54 53 PM](https://user-images.githubusercontent.com/72751268/161476419-07fcbb27-abc6-4ab9-83ae-454db6ed69e1.jpeg)
 
-```
 # Caso de Prueba Utilizado
 Este debe estar almacenado en un archivo de texto llamado "prueba.txt".
 
