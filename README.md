@@ -19,9 +19,9 @@ En esta actividad deberás hacer un programa que reciba como entrada un archivo 
 C++
 
 # Recursos Necesarios
+Para la utilización de este proyecto fue necesario el uso de un IDE o "Integrated Development Environment" ya sea de manera online o descargado.
 
 ```cpp
-
 //Librerias:
 
 #include <iostream>  //Flujo de datos.
@@ -29,6 +29,85 @@ C++
 #include <fstream>   //Archivos.
 #include <string>    //Cadenas.
 
-```  
+//Espacios de nombres:
+using namespace std; //Estandar.
+
+//Constantes:
+const int ERROR = 18; //Estado de error.
+
+//Variables globales:
+ifstream inFile; //Leer datos del archivo.
+int transitionMatrix[19][15] = 
+  { 
+  {6,     7,     8,     9,     10,    13,    11,    12,    14,    15,    15,    ERROR, ERROR, 0,     ERROR},
+  {2,     2,     ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {5,     5,     ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 13,    ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 13,    ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 13,    ERROR, ERROR, ERROR, ERROR, 1,     ERROR, 3,     0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 17,    ERROR, ERROR, ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 15,    ERROR, ERROR, ERROR, 15,    15,    15,    ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, 4,     ERROR, ERROR, 0,     ERROR},
+  {17,    17,    17,    17,    17,    17,    17,    17,    17,    17,    17,    17,    17,    17,    17   },
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0,     ERROR}
+  }; //Matriz de transiciones.
+``` 
+# Caso de Prueba Utilizado
+Este debe estar almacenado en un archivo de texto llamado "prueba.txt".
+
+```cpp
+  inFile.open("prueba.txt"); //Abrir archivo.
+  
+  //Almacenar lineas del archivo:
+  while (!inFile.eof()) { //Mientras el archivo no se acabe:
+
+    getline(inFile, linea); //Se obtiene una de sus lineas.
+    lineas.push_back(linea); //Se guarda en el vector.
+  }
+  inFile.close(); //Cerrar archivo.
+``` 
+Contenido del archivo:
+``` bash
+b = 7
+
+a = 32.4 * ( -8.6 - b ) / 6.1E-8
+
+d = a ^ b // Esto es un comentario
+```
+
+# Resultados Obtenidos
+``` bash
+Token                                                                           Tipo
+
+b                                                                               Variable 
+=                                                                               Asignacion 
+7                                                                               Entero 
+a                                                                               Variable 
+=                                                                               Asignacion 
+32.4                                                                            Real 
+*                                                                               Multiplicacion 
+(                                                                               Parentesis que abre 
+-8.6                                                                            Real 
+-                                                                               Resta 
+b                                                                               Variable 
+)                                                                               Parentesis que cierra 
+/                                                                               Division 
+6.1E-8                                                                          Real 
+d                                                                               Variable 
+=                                                                               Asignacion 
+a                                                                               Variable 
+^                                                                               Potencia 
+b                                                                               Variable 
+// Esto es un comentario                                                        Comentario 
+```
+
 
 
