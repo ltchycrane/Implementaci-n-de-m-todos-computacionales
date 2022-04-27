@@ -1,6 +1,7 @@
 # Actividad Integradora 1, Resaltador de sintaxis (evidencia de competencia)
 
-![ITESM](Tec.jpg)
+![Tec](https://user-images.githubusercontent.com/72751268/165434642-3b658ea7-91cf-4a9a-82ef-83cb499e31b5.jpg)
+
 
 ## Instituto Tecnológico y de Estudios Superiores de Monterrey Campus Monterrey
 
