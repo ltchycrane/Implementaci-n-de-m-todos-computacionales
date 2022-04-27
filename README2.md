@@ -146,7 +146,7 @@ bool unitTesting(); //Realizar unit testing.
 bool match(string[]); //Hacer match de resultados reales y esperados.
 ```
 
-## Main
+## main
 ```C++
 /*
 Funcion principal.
@@ -172,7 +172,7 @@ int main() {
 ```
 
 ## Funciones
-### Lexer
+### lexer
 ```C++
 
 /*
@@ -362,7 +362,7 @@ void lexer() {
   
 }
 ```
-### Filter
+### filter
 ```C++
 
 /*
@@ -994,7 +994,7 @@ void printVector3D(vector< vector< vector<string> > > v) {
   
 }
 ```
-### HighlightHTML
+### highlightHTML
 ```C++
 /* 
 Funcion que convierte el texto original a HTML y resalta la sintaxis de este.
