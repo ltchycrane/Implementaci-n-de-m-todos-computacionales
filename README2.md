@@ -172,3 +172,282 @@ int main() {
 ```
 
 ## Funciones
+### Lexer
+```C++
+
+/*
+Funcion que actua como el analizador lexico, separando las lineas de un archivo 
+de texto en tokens y guardando en un vector todos los tokens de una linea con
+su respectivo tipo.
+Parametros: no.
+Retorno: no.
+*/
+void lexer() {
+
+  //Variables locales:
+  vector<string> lineas; //Vector que guarda todas las lineas del archivo.
+  string linea = ""; //Cadena que va almacenando cada linea del archivo.
+  int cuenta = 0; //Cuenta de tokens en el archivo.
+  string value = ""; //Cadena que lmacena todos los caracteres de un token.
+  int index = 0; //Indice que va recorriendo cada linea del vector.
+  char c = ' '; //Caracter que va almacenando cada caracter del vector de lineas.
+  int nLinea = 0; //Iterador que recorre cada elemento del vector de lineas.
+  int state = 0; //Entero que indica el estado en el que se encuentra el DFA.
+  int past = 0; //Guarda el estado pasado.
+  vector<string> grupo; //Guarda un token con su tipo respectivo.
+  vector< vector<string> > grupos; //Guarda todos los tokens con su tipo 
+    //respectivo.
+  vector<int> cuentasLineas; //Cuenta de tokens por cada linea.
+  vector< vector<string> > lineaGrupos; //Guarda los tokens con su tipo de una 
+    //sola linea.
+  int cuentaTokens = 0; //Cuenta los tokens que se han pasado al vector 
+    //gruposLineas.
+
+  //Dependiendo del numero de prueba:
+  switch(nPrueba){ //Se abrira el archivo de prueba distinto:
+
+    case 0: //En caso de la primera prueba...
+      inFile.open("prueba0.txt"); //Abrir archivo "prueba.txt".
+      break;
+    
+    case 1: //En caso de ser la segunda prueba...
+      inFile.open("prueba1.txt"); //Abrir archivo "prueba1.txt".
+      break;
+    
+    case 2: //Y asi sucesivamente...
+      inFile.open("prueba2.txt");
+      break;
+    
+    case 3:
+      inFile.open("prueba3.txt");
+
+  }    
+  
+  //Almacenar lineas del archivo:
+  while (!inFile.eof()) { //Mientras el archivo no se acabe:
+
+    getline(inFile, linea); //Se obtiene una de sus lineas.
+    lineas.push_back(linea); //Se guarda en el vector lineas.
+    
+  }
+
+  inFile.close(); //Cerrar archivo.
+
+  for (int i = 0; i < lineas.size(); i++) { //Se recorre el vector con las lineas 
+    //del archivo...
+
+    for (int j = 0; j < lineas.at(i).length(); j ++) { //Se recorre cada linea...
+      
+      if (lineas.at(i)[j - 1] == ' ' && lineas.at(i)[j] != ' ') //Si el caracter 
+        //pasado era un espacio, y el actual no es un espacio...
+        cuenta++; //Tenemos un token mas.
+      if (lineas.at(i)[j] == '/' && lineas.at(i)[j - 1] == '/') //Si el caracter 
+        //anterior era un '/', y el caracter actual es un '/'...
+        j = lineas.at(i).length(); //Nos salimos del ciclo para que no cuente
+          //espacios en un comentario.
+      
+    }
+
+    if (lineas.at(i)[0] != 0 && lineas.at(i)[0] != ' ') // Si el caracter inicial 
+      //no es vacio o no es un espacio...
+      cuenta++; //Se agrega otro token a la cuenta (el inicial).
+    
+    //cout << cuenta << endl;
+    cuentasLineas.push_back(cuenta); //Se agrega la cuenta de tokens en la linea
+      //al vector que guarda el numero de tokens de todas las lineas.
+    
+    cuenta = 0; //Se reinicia la cuenta para pasar a la siguiente linea.
+    
+  }
+
+  /*
+  printVector1D(cuentasLineas);
+  cout << endl;
+  */
+  
+  //Leer elementos del vector:
+  while (nLinea < lineas.size()) { //Mientras haya lineas en el vector.
+    
+    do { //Hacer...
+
+      past = state; //Se guarda el estado actual para que se mantenga como el 
+        //anterior en esta iteracion.
+      c = lineas.at(nLinea)[index]; //Se obtiene el caracter de una linea.
+      index++; //Para pasar al siguiente caracter en la siguiente vuelta.
+      state = transitionMatrix[state][filter(c)]; //Se obtiene el estado actual de
+        //la matriz de transiciones segun c.
+      
+      if (state != 0) //Si es un estado diferente al inicial...
+        value += c; //Se aniade el caracter actual al token.
+      
+      if (state == 0 && index > 0 && past != 0) { //Si se ha llegado a un espacio, 
+        //sin que sea el inicio de la cadena o que el caracter anterior haya sido 
+        //un espacio...
+
+        grupo.push_back(value); //Se almacena el token obtenido en un vector 
+          //unidimensional.
+        grupo.push_back(getType(past)); //Se almacena el tipo del token, segun el 
+          //estado pasado (antes de ser 0) en un vector unidimensional.
+        grupos.push_back(grupo); //Se juntan el token y su tipo en un vector 
+          //bidimensional.
+        grupo.clear(); //Se limpia el vector unidimensional para almacenar otro 
+          //token con su respectivo tipo.
+        value = ""; //Se elimina el token obtenido para guardar otro token.
+        
+      }
+      
+      if (index == lineas.at(nLinea).length() && state != 0) { //Si se llego al 
+        //final de la linea sin que el ultimo estado sea un espacio...
+        
+        grupo.push_back(value); //Se almacena el token obtenido en el vector 1D.
+        grupo.push_back(getType(state)); //Se almacena en el vector 1D el tipo del 
+          //token, segun el estado actual.
+        
+        grupos.push_back(grupo); //Se juntan el token y su tipo en un vector 2D.
+        grupo.clear(); //Se limpia el vector 1D para almacenar otro token con su 
+          //respectivo tipo.
+        value = ""; //Se reinicia value para guardar otro token.
+        
+      }
+  
+    } while (index < lineas.at(nLinea).length()); //Mientras no se llegue al final 
+      //de la linea. 
+
+    nLinea++; //Vamos hacia la siguiente linea.
+    index = 0; //El iterador debe de comenzar al inicio de la linea.
+    value = ""; //Se reinicia el valor de value para guardar otro token.
+    state = 0; //El estado del inicio de la linea es 0.
+    past = 0; // El estado pasado sera 0 de igual forma.
+    
+  }
+
+  /*
+  //Formato de la salida:
+  cout.width(80); //Se dejan 80 espacios para cada escritura, parecido a una 
+    //tabla, pues 80 caracteres es una
+  //convencion informal del maximo que debe de tener una linea de codigo.
+  cout << left; //Se alinea la escritura a la izquierda de los espacios.
+  cout << "Token"; //Los tokens estaran debajo de esta palabra.
+  cout << "Tipo"; //Los tipos de tokens estaran debajo de esta palabra.
+  cout << endl; //Se comenzaran a imprimir los elementos en la siguiente linea.
+
+  printVector2D(grupos); //Imprimir la matriz de tokens y tipos respectivos.
+  cout << endl;
+  */
+
+  //Almacenar grupos por lineas:
+  for (int i = 0; i < cuentasLineas.size(); i++) { //Recorre el vector que tiene 
+    //la cuenta de los tokens por linea...
+    
+    for (int j = 0; j < cuentasLineas.at(i); j++) { //Segun el numero de tokens 
+      //que tenga la linea actual...
+  
+      lineaGrupos.push_back(grupos.at(j + cuentaTokens)); //Se almacenan los 
+        //grupos en el vector lineaGrupos.
+        
+    }
+
+    if (cuentasLineas.at(i) == 0) //Si el numero de tokens en esta linea es 0...
+      gruposLineas.push_back({{"Linea en blanco"}}); //Se indica que esa linea 
+        //esta "vacia".
+    else //De otra forma...
+      gruposLineas.push_back(lineaGrupos); //Se guardan los grupos de esa linea en 
+        //gruposLineas.
+    
+    lineaGrupos.clear(); //Se volveran a contar los tokens de una linea.
+    
+    cuentaTokens += cuentasLineas.at(i); //La cuenta de tokens incrementa.
+    
+  }
+  
+}
+```
+### Filter
+```C++
+
+/*
+Funcion para obtener el numero de columna de la matriz de transiciones segun un 
+determinado caracter.
+Parametros: caracter (c) a probar (char).
+Retorno: numero de columna de la matriz(int):
+*/
+int filter(char c) {
+
+  //Verificar coincidencia de c:
+  if (c == '+') //Si es un '+' (es el digito que el usuario ve)...
+    return 0;
+  else if (c == '-')
+    return 1;
+  else if (c == '=')
+    return 2;
+  else if (c == '*')
+    return 3;
+  else if (c == '^')
+    return 4;
+  else if (c >= 48 && c <= 57) //Si es un digito (son sus valores ASCII)...
+    return 5;
+  else if (c == '(')
+    return 6;
+  else if (c == ')')
+    return 7;
+  else if (c == '/')
+    return 8;
+  else if ((c >= 65 && c <= 68) || (c >= 70 && c <= 90) || (c >= 97 && c <= 100) ||
+    (c >= 102 && c <= 122)) //Si es una letra que no sea 'e' o 'E':
+    return 9;
+  else if (c == 'E' || c == 'e')
+    return 10;
+  else if (c == '_')
+    return 11;
+  else if (c == '.')
+    return 12;
+  else if (c == ' ')
+    return 13;
+  else //Cualquier otro caracter:
+    return 14;
+   
+}
+```
+### getType
+```C++
+/*
+Funcion que obtiene el tipo de token segun un estado final del DFA.
+Parametros: estado final (s) del DFA (int).
+Retorno: tipo del token (string).
+*/
+string getType(int s) {
+
+  switch(s) { //Segun sea el valor de s, se retorna el tipo del token 
+    //correspondiente...
+
+    case 6:
+      return "Suma";
+    case 7:
+      return "Resta";
+    case 8:
+      return "Asignacion";
+    case 9:
+      return "Multiplicacion";
+    case 10:
+      return "Potencia";
+    case 11:
+      return "Parentesis que abre";
+    case 12:
+      return "Parentesis que cierra";
+    case 13:
+      return "Entero";
+    case 14:
+      return "Division";
+    case 15:
+      return "Variable";
+    case 16:
+      return "Real";
+    case 17:
+      return "Comentario";
+    default: //Cualquier otro estado que se haga pasar por final...
+      return "Error";
+        
+  }
+
+}
+```
