@@ -48,6 +48,8 @@ implicaciones éticas que el tipo de tecnología que desarrollaste pudiera tener
 
 ### Gramática
 
+``` Bool
+
 PAOC -> <Parentesis que abre> <Variable> <Parentesis que cierra> OP <Asignacion> M
   
 AO -> <Variable> <Operador> <Asignacion> M
@@ -85,6 +87,7 @@ OP -> <Multiplicacion>
 OP -> <Division>
   
 OP -> <Potencia>
+```
 
 ### Código
 
@@ -1483,7 +1486,6 @@ a = 5 //
 Al ejecutar el programa, se muestra lo siguiente:
 
 ![Output](https://user-images.githubusercontent.com/72751268/165436819-21b00107-5e1e-4be8-8f46-95e6fc86af1b.JPG)
-
 
 Obteniendo así los resultados deseados.
 
