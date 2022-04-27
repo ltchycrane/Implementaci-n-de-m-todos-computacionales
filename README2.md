@@ -451,3 +451,448 @@ string getType(int s) {
 
 }
 ```
+### parser
+```C++
+
+/*
+Funcion que actua como el analizador sintactico, analizando el orden de los tokens 
+en una linea, y a partir de ello, determinar si es correcto o incorrecto.
+Parametros: no.
+Retorno: no.
+*/
+void parser() {
+
+  vector<string> tokensDeLinea; //Vector que guarda los tokens que hay en una
+    //linea.
+  bool resultado = true; //Booleano que indica si una linea tiene una sintaxis 
+    //correcta.
+  
+  for (int i = 0; i < gruposLineas.size(); i++) { //Se recorre el vector de los 
+    //grupos almacenados por linea...
+
+    for (int j = 0; j < gruposLineas.at(i).size(); j++) { //Se recorre cada 
+      //linea...
+
+      if (gruposLineas.at(i).at(j).size() == 2) //Si en la linea actual si hay 
+        //tokens...
+        tokensDeLinea.push_back(gruposLineas.at(i).at(j).at(1)); //Se aniade a 
+          //tokensDeLinea el token actual.
+      else //Si no...
+        tokensDeLinea.push_back(gruposLineas.at(i).at(j).at(0)); //Se aniade este 
+          //elemento que corresponde cuando la linea esta vacia.
+      
+    }
+
+    resultado = parseMenu(tokensDeLinea); //Se analiza tokensDeLinea 
+      //sintacticamente, y se guarda el resultado (1 o 0).
+
+    if (resultado && tokensDeLinea.size() == 0) //Si el resultado es correcto, y 
+      //se analizaron todos los tokens de la linea...
+      lineasCorrectas.push_back("Correcta"); //Se anade a el vector 
+        //lineasCorrectas que esa linea tiene una estructura gramatical correcta.
+    else //Si no...
+      lineasCorrectas.push_back("Incorrecta"); //Se aniade que esta incorrecta.
+    
+    tokensDeLinea.clear(); //Se guardaran los tokens de otra linea en la vuelta 
+      //siguiente.
+    
+  }
+
+  cout << endl;
+  
+  //printVector1D(lineasCorrectas); //Se imprime el vector que indica si las lineas 
+    //fueron correctas o no.
+  
+}
+```
+### parseMenu
+```C++
+
+/*
+Funcion que verifica que los tokens de una linea tengan un orden correcto haciendo 
+parsing con distintas opciones de la gramatica.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parseMenu(vector<string>& tL) {
+  
+  vector<string> save = tL; //Vector de strings que guarda los tokens de la linea 
+    //a como estaban inicialmente.
+
+  if (tL.size() != 0 && tL.at(0) == "Linea en blanco") { //Si el vector de tokens 
+    //no esta vacio, y tiene guardada la string "Linea en blanco"...
+    
+    tL.erase(tL.begin()); //Se borra el primer elemento del vector de tokens.
+    return true; //El orden es correcto.
+
+  }
+  else { //Si no...
+    
+    if (parsePAO(tL)) //Se hace parsing con esta regla (asignacion con operador 
+      //entre parentesis)...
+      return true; //Si coincide, el orden es correcto.
+    else
+      tL = save; //Si no, se restablece el vector de tokens a su estado original.
+    
+    if (parseAO(tL)) //Se hace parsing con esta regla (asignacion con operador)...
+      return true; //Si coincide, el orden es correcto.
+    else
+      tL = save; //Si no, se restablece el vector de tokens a su estado original.
+    
+    if (parsePA(tL)) //Se hace parsing con esta regla (asignacion entre 
+      //parentesis)...
+      return true; //Si coincide, el orden es correcto.
+    else
+      tL = save; //Si no, se restablece el vector de tokens a su estado original.
+    
+    if (parseA(tL)) //Se hace parsing con esta regla (asignacion simple)...
+      return true; //Si coincide, el orden es correcto.
+    else
+      tL = save; //Si no, se restablece el vector de tokens a su estado original.
+    
+    if (parseM(tL)) //Se hace parsing con esta regla (expresion simple)...
+      return true; //Si coincide, el orden es correcto.
+    else
+      tL = save; //Si no, se restablece el vector de tokens a su estado original.
+
+    if (parseC(tL)) //Se hace parsing con esta regla (comentario)...
+      return true; //Si coincide, el orden es correcto.
+    else
+      tL = save; //Si no, se restablece el vector de tokens a su estado original.
+  
+    return false; //Si no es ninguna de las opciones anteriores, no tiene un orden 
+      //correcto.
+    
+  }
+  
+}
+```
+### parsePAO
+```C++
+/*
+Funcion que verifica que los tokens de una linea tengan la estructura gramatical 
+de asignacion con operador entre parentesis.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parsePAO(vector<string>& tL) {
+
+  if (tL.size() != 0 && tL.at(0) == "Parentesis que abre") //Si el primer token es 
+    //un "Parentesis que abre"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else //Si no...
+    return false; //No es este el orden.
+  
+  if (tL.size() != 0 && tL.at(0) == "Variable") //Si el primer token es una 
+    //"Variable"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else //Si no...
+    return false; //No es este el orden.
+
+  if (tL.size() != 0 && tL.at(0) == "Parentesis que cierra") //Si el primer token 
+    //es un "Parentesis que abre"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else //Si no...
+    return false; //No es este el orden.
+
+  if (!parseOP(tL)) //Si el primer token no es un operador aritmetico...
+    return false; //No es este el orden.
+
+  if (tL.size() != 0 && tL.at(0) == "Asignacion") //Si el primer token es un 
+    //operador de "Asignacion"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else //Si no...
+    return false; //No es este el orden.
+
+  if (!parseM(tL)) //Si lo que sigue no es una expresion simple...
+    return false; //No es este el orden.
+
+  return true; //Si pasa todos los filtros, es este el orden.
+
+}
+```
+### parseAO
+```C++
+/*
+Funcion que verifica que los tokens de una linea tengan la estructura gramatical 
+de asignacion con operador.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parseAO(vector<string>& tL) {
+
+  if (tL.size() != 0 && (tL.at(0) == "Variable")) //Si el primer token es una 
+    //"Variable"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //Si no, este no es el orden.
+
+  if (!parseOP(tL)) //Si el primer token no es un operador aritmetico...
+    return false; //Este no es el orden.
+
+  if (tL.size() != 0 && (tL.at(0) == "Asignacion")) //Si el primer token es un 
+    //operador de "Asignacion"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //Si no, este no es el orden.
+
+  if (!parseM(tL)) //Si lo que sigue no es una expresion simple...
+    return false; //Este no es el orden.
+
+  return true; //Si pasa todos los filtros, este es el orden.
+
+}
+```
+### parsePA
+```C++
+/*
+Funcion que verifica que los tokens de una linea tengan la estructura gramatical 
+de asignacion entre parentesis.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parsePA(vector<string>& tL) {
+
+  if (tL.size() != 0 && (tL.at(0) == "Parentesis que abre")) //Si el primer token  
+    //es un "Parentesis que abre"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //De lo contrario, no es este el orden.
+  
+  if (tL.size() != 0 && (tL.at(0) == "Variable")) //Si el primer token es una 
+    //"Variable"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //De lo contrario, no es este el orden.
+
+  if (tL.size() != 0 && (tL.at(0) == "Parentesis que cierra")) //Si el primer 
+    //token es un "Parentesis que cierra"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //De lo contrario, no es este el orden.
+
+  if (tL.size() != 0 && (tL.at(0) == "Asignacion")) //Si el primer token es un 
+    //operador de "Asignacion"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //De lo contrario, no es este el orden.
+
+  if (!parseM(tL)) //Si lo que sigue no es una expresion simple...
+    return false; //No es este el orden.
+
+  return true; //Si pasa todos los filtros, es este el orden.
+
+}
+```
+### parseA
+```C++
+/*
+Funcion que verifica que los tokens de una linea tengan la estructura gramatical 
+de asignacion.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parseA(vector<string>& tL) {
+  
+  if (tL.size() != 0 && (tL.at(0) == "Variable")) //Si el primer token es una 
+    //"Variable"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //De lo contrario, no es este el orden.
+
+  if (tL.size() != 0 && (tL.at(0) == "Asignacion")) //Si el primer token es un 
+    //operador de "Asignacion"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //De lo contrario, no es este el orden.
+
+  if (!parseM(tL)) //Si lo que sigue no es una expresion simple...
+    return false; //No es este el orden.
+
+  return true; //Si pasa todos los filtros, es este el orden.
+
+}
+```
+
+### parseM
+```C++
+/*
+Funcion que verifica que los tokens de una linea tengan la estructura gramatical 
+de una expresion simple.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parseM(vector<string>& tL) {
+
+  if (!parseT(tL)) //Si lo que sigue no es una estructura terminal...
+    return false; //Este no es el orden.
+
+  if(!parseO(tL)) //Si lo que sigue no es una operacion (opcional)...
+    return false; //Este no es el orden.
+
+  if(!parseC(tL)) //Si lo que sigue no es un comentario (opcional)...
+    return false; //Este no es el orden.
+
+  return true; //Si pasa todos los filtros, este es el orden.
+  
+}
+```
+
+### parseC
+```C++
+/*
+Funcion que verifica que el primer token de la linea enviada sea un comentario.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parseC(vector<string>& tL) {
+
+  if (tL.size() == 0 || tL.at(0) != "Comentario") //Si el primer token no es un 
+    //comentario...
+    return true; //Se retorna verdadero.
+  else {
+    
+    tL.erase(tL.begin()); //De lo contrario, se elimina el primer token.
+    return true; //Y se retorna verdadero.
+    
+  }
+  
+}
+```
+### parseOP
+```C++
+/*
+Funcion que verifica que el primer token de la linea enviada sea un operador 
+aritmetico.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parseOP(vector<string>& tL) {
+
+  if (tL.size() != 0 && (tL.at(0) == "Suma" || tL.at(0) == "Resta" || tL.at(0) == 
+    "Multiplicacion" || tL.at(0) == "Division" || tL.at(0) == "Potencia")) { //Si 
+      //la linea tieke tokens, y el primero es un operador aritmetico...
+    
+    tL.erase(tL.begin()); //Se borra el primer token.
+    return true; //Se indica que asi fue.
+
+  }
+  else //Si no...
+    return false; //No es el orden de la regla gramatical que llamo esta funcion.
+  
+}
+```
+### parseT
+```C++
+/*
+Funcion que verifica que el/los primer/os token/s de una linea tenga/n la 
+estructura gramatical de una estructura terminal.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parseT(vector<string>& tL) {
+  
+  if (tL.size() != 0 && (tL.at(0) == "Entero" || tL.at(0) == "Real" || tL.at(0) == 
+    "Variable")) { //Si el primer token es un elemento operable...
+
+    tL.erase(tL.begin()); //Se borra el primer token.
+    return true; //Se comprueba que es correcto.
+    
+  }
+  else if (tL.size() != 0 && (tL.at(0) == "Parentesis que abre")) { //Si el primer 
+    //token es un "Parentesis que abre"...
+
+    if (!parseP(tL)) //Si lo que sigue no es una correcta estructura de 
+      //parentesis...
+      return false; //Se comprueba que es incorrecto.
+    else //Si no...
+      return true; //Se comprueba que es correcto.
+    
+  }
+  else //Si no...
+    return false; //Se comprueba que es incorrecto.
+
+}
+```
+### parseP
+```C++
+/*
+Funcion que verifica que el/los primer/os token/s de una linea tenga/n la 
+estructura gramatical de una estructura de parentesis.
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parseP(vector<string>& tL) { 
+
+  if (tL.size() != 0 && (tL.at(0) == "Parentesis que abre")) //Si el primer token 
+    //es un "Parentesis que abre"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //Si no, la estructura no tiene un orden correcto.
+
+  if(!parseM(tL)) //Si lo que sigue no es una expresion simple...
+    return false; //El orden no es correcto.
+
+  if (tL.size() != 0 && (tL.at(0) == "Parentesis que cierra")) //Si el primer 
+    //token es un "Parentesis que cierra"...
+    tL.erase(tL.begin()); //Se borra el primer token.
+  else
+    return false; //Si no, la estructura no tiene un orden correcto.
+
+  return true; //Si pasa todos los filtros, es una estructura correcta.
+
+}
+```
+### parseO
+```C++
+/*
+Funcion que verifica que el/los primer/os token/s de una linea tenga/n la 
+estructura gramatical de una operacion
+Parametros: vector (tL) por referencia con los tokens de una linea 
+(vector<string>).
+Retorno: valor Booleano (bool), verdadero si hay un correcto orden, de lo 
+contrario, falso.
+*/
+bool parseO(vector<string>& tL) {
+
+  if (tL.size() == 0 || (tL.at(0) != "Suma" && tL.at(0) != "Resta" && tL.at(0) != 
+    "Multiplicacion" && tL.at(0) != "Division" && tL.at(0) != "Potencia")) //Si el 
+      //primer elemento no es un operador aritmetico...
+    return true; //Es una estructura correcta (caso epsilon).
+  else { //Si lo es...
+
+    if (!parseOP(tL)) //Si el primer elemento no es un operador aritmetico...
+      return false; //No es una estructura valida.
+
+    if(!parseM(tL)) //Si lo que sigue no es una expresion simple...
+      return false; //No es una estructura valida.
+
+    if(!parseO(tL)) //Si lo que sigue no es una operacion...
+      return false; //No es una estructura valida.
+
+    return true; //Si pasa todos los filtros, es una estructura correcta.
+    
+  }
+  
+}
+```
