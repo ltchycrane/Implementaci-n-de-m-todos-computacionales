@@ -896,3 +896,444 @@ bool parseO(vector<string>& tL) {
   
 }
 ```
+### printVector1D
+```C++
+/*
+Funcion que imprime los elementos de un vector de strings.
+Parametros: vector (v) de strings (vector<string>).
+Retorno: nada.
+*/
+void printVector1D(vector<string> v) {
+
+  for (int i = 0; i < v.size(); i++) { //Se recorre todo el vector...
+
+    cout << "Linea " << i + 1 << ": " << v.at(i) << endl; //Se imrpime elemento 
+      //por elemento.
+    
+  }
+  
+}
+```
+### printVector2D
+```C++
+/*
+Funcion que imprime los elementos de una matriz de strings.
+Parametros: matriz (v) de strings (vector< vector<string> >).
+Retorno: nada.
+*/
+void printVector2D(vector< vector<string> > v) {
+
+  //cout << endl; //Salto de linea para diferenciar los encabezados del resto de 
+    //elementos de la tabla.
+  
+  for (int i = 0; i < v.size(); i++) { //Recorre cada vector de la matriz...
+
+    //cout.width(79); //Se dejan 79 espacios para la salida (80 no por el espacio 
+      //adicional entre elementos, ver for siguiente).
+    //cout << left; //La salida se alinea a la izquierda.
+    
+    for (int j = 0; j < v.at(i).size(); j++) { //Recorre cada elemento de cada 
+      //vector...
+
+      cout << v.at(i).at(j) << " "; //Se imprime asi un elemento del vector mas un 
+        //espacio por si llegara a ser de mas de 79 caracteres, que por lo menos
+        //lo separe un espacio del siguiente elemento.
+      
+    }
+
+    cout << endl; //Salto de linea para imprimir los elementos del siguiente 
+      //vector de la matriz.
+    
+  }
+  
+}
+```
+### printVector3D
+```C++
+/*
+Funcion que imprime los elementos de una matriz 3D de strings.
+Parametros: matriz 3D (v) de strings (vector< vector< vector<string> > >).
+Retorno: nada.
+*/
+void printVector3D(vector< vector< vector<string> > > v) {
+
+  //Impresion con corchetes para separar vectores y matrices:
+  for (int i = 0; i < v.size(); i++) { //Se recorre cada matriz 2D de la matriz
+    //3D...
+
+    for (int j = 0; j < v.at(i).size(); j++) { //Se recorre cada vector de la 
+      //matriz 2D...
+
+      if (j == 0) //Si es el primer vector...
+        cout << "[ ";
+      
+      for (int k = 0; k < v.at(i).at(j).size(); k++) { //Se recorre cada elemento 
+        //del vector...
+
+        if (k == 0) //Si es el primer elemento...
+          cout << "[ ";
+        
+        cout << v.at(i).at(j).at(k) << " ";
+
+        if (k == v.at(i).at(j).size() - 1) //Si es el ultimo elemento...
+          cout << "] ";
+        
+      }
+
+      if (j == v.at(i).size() - 1) //Si es el ultimo vector...
+        cout << "] ";
+      
+    }
+
+    cout << endl;
+    
+  }
+
+  //cout << "\nTamanio: " << v.size() << endl;
+  //cout << endl;
+  
+}
+```
+### HighlightHTML
+```C++
+/* 
+Funcion que convierte el texto original a HTML y resalta la sintaxis de este.
+Parametros: no.
+Retorno: no.
+*/
+void highlightHTML() {
+
+	//Hoja de estilos (CSS):
+	outFile.open("Estilos.css");
+	
+	outFile << "body {" << endl; //Estilos del cuerpo:
+		
+		outFile << "\n\tbackground-color: black;" << endl; //Fondo negro.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\np {" << endl; //Estilos del parrafo:
+		
+		outFile << "\n\tcolor: grey;" << endl; //Texto gris.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Suma {" << endl; //Clase Suma:
+		
+		outFile << "\n\tcolor: blue;" << endl; //Texto azul.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Resta {" << endl; //Clase Resta:
+		
+		outFile << "\n\tcolor: blue;" << endl; //Texto azul.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Multiplicacion {" << endl; //Clase Multiplicacion:
+		
+		outFile << "\n\tcolor: blue;" << endl; //Texto azul.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Division {" << endl; //Clase Division:
+		
+		outFile << "\n\tcolor: blue;" << endl; //Texto azul.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Potencia {" << endl; //Clase Potencia:
+		
+		outFile << "\n\tcolor: blue;" << endl; //Texto azul.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Asignacion {" << endl; //Clase Asignacion:
+		
+		outFile << "\n\tcolor: red;" << endl; //Texto rojo.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Parentesis{" << endl; //Clase Parentesis.
+		
+		outFile << "\n\tcolor: yellow;" << endl; //Texto amarillo.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.que{" << endl; //Clase que:
+		
+		outFile << "\n\tcolor: yellow;" << endl; //Texto amarillo.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.abre{" << endl; //Clase abre:
+		
+		outFile << "\n\tcolor: yellow;" << endl; //Texto amarillo.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.cierra {" << endl; //Clase cierra:
+		
+		outFile << "\n\tcolor: yellow;" << endl; //Texto amarillo.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Entero {" << endl; //Clase Entero:
+		
+		outFile << "\n\tcolor: lime;" << endl; //Texto lima.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Real {" << endl; //Clase Real:
+		
+		outFile << "\n\tcolor: lime;" << endl; //Texto lima.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Variable {" << endl; //Clase Variable:
+		
+		outFile << "\n\tcolor: white;" << endl; //Texto blanco.
+
+	outFile << "\n}" << endl;
+	
+	outFile << "\n.Comentario {" << endl; //Clase Comentario:
+		
+		outFile << "\n\tcolor: green;" << endl; //Color verde.
+
+	outFile << "\n}";
+	 
+	outFile << "\n.Error {" << endl; //Estilos del cuerpo:
+
+    outFile << "\n\tcolor: black;" << endl; //Letra negra.
+		outFile << "\tbackground-color: rgb(157, 135, 135);" << endl; //Fondo 
+      //blanquesino.
+
+	outFile << "\n}" << endl;
+	
+	outFile.close();
+	
+	//Resaltador (HTML):
+	outFile.open("Equipo5_Resaltado.html");
+	
+	outFile << "<!DOCTYPE html>" << endl; //Encabezado del documento.
+	
+		outFile << "\n\t<html>" << endl; //Inicio de la pagina.
+	
+    		outFile << "\n\t\t<head>" << endl; //Encabezado de la pagina:
+    
+    			outFile << "\n\t\t\t<title>Equipo05_Resaltador</title>" << endl; 
+            //Titulo.
+    			
+				outFile << "\n\t\t\t<meta charset=\"UTF-8\">" << endl; //Charset.
+    			outFile << "\t\t\t<meta name = \"viewport\" content=\"width = device-"
+                  << "width, initial-scale = 1.0\">" << endl; //Viewport.
+    
+    			outFile << "\n\t\t\t<link rel=\"stylesheet\" href=\"Estilos.css\">" 
+                  << endl; //Link al CSS.
+
+    		outFile << "\n\t\t</head>" << endl;
+    
+    		outFile << "\n\t\t<body>" << endl; //Cuerpo:
+        
+    			outFile << "\n\t\t\t<p>" << endl; //Parrafo:
+        
+        	//A partir de aqui se automatiza:
+
+          for (int i = 0; i < gruposLineas.size(); i++) { //Se recorre cada matriz 
+            //2D de la matriz 3D...
+
+            outFile << "\n\t\t\t\t" << i + 1 << " &nbsp&nbsp " << endl;
+            
+            for (int j = 0; j < gruposLineas.at(i).size(); j++) { //Se recorre 
+              //cada vector de la matriz 2D...
+
+              if (lineasCorrectas.at(i) == "Correcta") {
+                
+                if (gruposLineas.at(i).at(j).size() == 2) {
+  
+                  if (j != gruposLineas.at(i).size() - 1)
+                  outFile << "\t\t\t\t<span class=\"" 
+                          << gruposLineas.at(i).at(j).at(1)
+                          << "\">" << gruposLineas.at(i).at(j).at(0) << " </span>" 
+                          << endl;
+                  else
+                    outFile << "\t\t\t\t<span class=\"" 
+                            << gruposLineas.at(i).at(j).at(1)
+                            << "\">" << gruposLineas.at(i).at(j).at(0) 
+                            << "</span>" << endl;
+                  
+                }
+
+              }
+              else{
+
+                if (j == 0)
+                  outFile << "\t\t\t\t<span class=\"Error\">";
+                
+                if (j != gruposLineas.at(i).size() - 1)
+                  outFile << "<span class=\"" << gruposLineas.at(i).at(j).at(1)
+                          << "\">" << gruposLineas.at(i).at(j).at(0) << " </span>";
+                else
+                    outFile << "<span class=\"" << gruposLineas.at(i).at(j).at(1)
+                          << "\">" << gruposLineas.at(i).at(j).at(0) << "</span>";
+
+                if (j == gruposLineas.at(i).size() - 1)
+                  outFile << "</span>" << endl;
+                
+              }
+            
+            }
+
+            outFile << "\t\t\t\t<br>" << endl;
+    
+          }
+        
+    			outFile << "\n\t\t\t</p>" << endl;
+    
+    		outFile << "\n\t\t</body>" << endl;
+
+		outFile << "\n\t</html>";
+	
+	outFile.close();
+  
+}
+```
+### unitTesting
+```C++
+/*
+Funcion: hacer unit testing del código, haciendo varias pruebas con el mismo.
+Parametros: no.
+Retorno: valor Booleano (bool): true si pasa todas las pruebas, false si no.
+*/
+bool unitTesting() {
+
+  int pruebasPasadas = 0; //Pruebas que pasa el codigo.
+  string trial0[] = {"Correcta", "Correcta", "Incorrecta", "Incorrecta",
+    "Correcta", "Correcta", "Correcta"}; //Primera prueba.
+  string trial1[] = {"Correcta", "Incorrecta", "Correcta", "Incorrecta",
+    "Correcta", "Correcta", "Incorrecta", "Correcta", "Correcta", "Incorrecta",
+    "Incorrecta", "Correcta", "Correcta", "Correcta"}; //Segunda prueba.
+  string trial2[] = {"Correcta", "Correcta", "Correcta", "Incorrecta",
+    "Incorrecta", "Correcta", "Incorrecta", "Correcta", "Correcta",
+    "Correcta", "Correcta", "Incorrecta", "Correcta", "Incorrecta", "Correcta",
+    "Correcta", "Correcta", "Correcta", "Correcta", "Incorrecta", "Correcta"};
+    //Prueba 3.
+  string trial3[] = {"Correcta", "Correcta", "Correcta", "Correcta",
+    "Correcta", "Incorrecta", "Correcta", "Correcta", "Correcta", "Incorrecta",
+    "Correcta", "Correcta", "Correcta", "Incorrecta", "Correcta", "Correcta",
+    "Incorrecta", "Correcta", "Correcta", "Correcta", "Correcta", "Correcta",
+    "Correcta", "Incorrecta", "Correcta", "Incorrecta", "Correcta",
+    "Correcta"}; //Prueba 4
+  
+  //4 pruebas:
+  for (int i = 0; i < 4; i++) {
+    
+    gruposLineas.clear(); //Se limpia el vector que guarda los tokens y tipos 
+      //linea por linea.
+    lineasCorrectas.clear(); //Se limpia el vector que indica si la gramatica
+      //de una linea es correcta o no.
+
+    lexer();
+    parser();
+
+    //Validar resultados:
+    switch(nPrueba) { 
+
+      case 0: //Primera prueba.
+        
+        if (!match(trial0)){ //Si no pasa la primera prueba...
+          
+          cout << "Prueba 1/4 fallida. Revisar programa." << endl;
+          return false; //El programa esta incorrecto.
+          
+        }
+        else{ //Si la pasa.
+          
+          pruebasPasadas++; //Se incrementa el numero de pruebas pasadas.
+          cout << "Prueba 1/4 pasada correctamente." << endl;
+          
+        }
+        break;
+      
+      case 1:
+
+        if (!match(trial1)){ //Si no pasa la segunda prueba...
+          
+          cout << "Prueba 2/4 fallida. Revisar programa." << endl;
+          return false; //El programa esta incorrecto.
+          
+        }
+        else{ //Si la pasa.
+          
+          pruebasPasadas++; //Se incrementa el numero de pruebas pasadas.
+          cout << "Prueba 2/4 pasada correctamente." << endl;
+          
+        }   
+        
+        break;
+
+      case 2:
+        
+        if (!match(trial2)){ //Si no pasa la tercera prueba...
+          
+          cout << "Prueba 3/4 fallida. Revisar programa." << endl;
+          return false; //El programa esta incorrecto.
+          
+        }
+        else{ //Si la pasa.
+          
+          pruebasPasadas++; //Se incrementa el numero de pruebas pasadas.
+          cout << "Prueba 3/4 pasada correctamente." << endl;
+          
+        }
+        
+        break;
+      
+      case 3:
+
+        if (!match(trial3)){ //Si no pasa la primera prueba...
+          
+          cout << "Prueba 4/4 fallida. Revisar programa." << endl;
+          return false; //El programa esta incorrecto.
+          
+        }
+        else{ //Si la pasa.
+          
+          pruebasPasadas++; //Se incrementa el numero de pruebas pasadas.
+          cout << "Prueba 4/4 pasada correctamente." << endl;
+          
+        }   
+      
+    }
+
+    nPrueba++;
+    
+  }
+
+  return true; //Si paso todas las pruebas, el programa es correcto.
+
+}
+```
+### match
+```C++
+/*
+Funcion que compara los resultados esperados de una prueba con los resultados reales.
+Parametros: arreglo (trial) de strings (string[]) con los resultados esperados.
+Retorno: valor Booleano (bool), devuelve true si coincidieron todos los resultados, 
+false si no.
+*/
+bool match(string trial[]) {
+
+  for (int i = 0; i < lineasCorrectas.size(); i++) { //Se recorre el vector
+    //"lineasCorrectas"...
+
+    if (lineasCorrectas.at(i) != trial[i]) //Si una linea no dio de
+      //resultado lo que se esperaba...
+      return false; //No se pasa la prueba.
+    
+  }
+
+  return true; //Pasa la prueba al haber comprobado linea por linea.
+  
+}
+```
