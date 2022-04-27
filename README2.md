@@ -1337,3 +1337,19 @@ bool match(string trial[]) {
   
 }
 ```
+
+#### Prueba
+
+Utilizando el ejemplo del inicio (en el archivo "prueba.txt"):
+
+![TXT](TXT.png)
+
+Al ejecutar el programa, se muestra lo siguiente:
+
+![EXE](EXE.jpg)
+
+Obteniendo así los resultados deseados.
+
+## Nota para el docente
+
+Para más casos de prueba, se recomienda modificar directamente el archivo "prueba.txt" para no tener que modificar el código.
