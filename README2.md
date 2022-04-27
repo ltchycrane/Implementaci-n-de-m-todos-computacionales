@@ -1,6 +1,6 @@
-# Actividad 3.2 Programando un DFA
+# Actividad Integradora 1, Resaltador de sintaxis (evidencia de competencia)
 
-![Tec](https://user-images.githubusercontent.com/72751268/165428589-cbd94e91-7b63-4ca7-a461-b69038917e4e.jpg)
+![ITESM](Tec.jpg)
 
 ## Instituto Tecnológico y de Estudios Superiores de Monterrey Campus Monterrey
 
@@ -18,28 +18,72 @@ Febrero-junio 2022
 
 #### Fecha:
 
-03 de abril de 2022
+26 de abril de 2022
 
-## Descripción de la Evidencia:
+## Nota importante
+Todos los archivos de esta entrega deberán formar parte de una misma carpeta (no comprimida) para su correcta visualización.
+
+## Descripción de la Evidencia
 
 En equipos de 3 personas:
 
-1. El Syntax Highlighter utilizará el output de su programa anterior: necesita una lista de tokens la cual va a procesar para poder determinar si el orden es correcto o no.
-2. Usando el lenguaje de su preferencia, implementen un analizador de sintaxis por método de descenso recursivo
-  1. Pueden tener el ; como token final de cada expresión. Considerar cuando hay comentarios
-3. El programa debe convertir su entrada en documentos de HTML+CSS que resalten su léxico
+1. El Syntax Highlighter utilizará el output de su programa anterior: necesita una lista de tokens la cual va a procesar para poder determinar si el orden es correcto 
+o no. 
+2. Usando el lenguaje de su preferencia, implementen un analizador de sintaxis por método de descenso recursivo.
+  - Pueden tener el ; como token final de cada expresión. Considerar cuando hay comentarios.
+3. El programa debe convertir su entrada en documentos de HTML+CSS que resalten su léxico.
 4. Incluye un README, donde venga la gramática de tu analizador. Y todo lo necesario para ejecutar tu código.
-5. Utiliza unit testing e incluyelo en tu proyecto
+5. Utiliza unit testing e incluyelo en tu proyecto.
 6. Utiliza las convenciones de codificación del lenguaje en el que está implementado tu programa (ej.; si estás usando Python, asegurate de seguir el PEP8).
-7. Realiza un video donde se muestre el correcto funcionamiento de su programa
+7. Realiza un video donde se muestre el correcto funcionamiento de su programa.
 
 Adicionalmente, habrá que hacer una reflexión de manera individual (un documento por miembro de equipo):
-
 1. Reflexiona sobre la solución planteada, los algoritmos implementados y sobre el tiempo de ejecución de los mismos.
 2. Calcula la complejidad de tu algoritmo
-3. Plasma en un breve reporte de una página las conclusiones de tu reflexión en los puntos 1 y 2 de este inciso. Agrega además una breve reflexión sobre las implicaciones éticas que el tipo de tecnología que desarrollaste pudiera tener en la sociedad.
+3. Plasma en un breve reporte de una página las conclusiones de tu reflexión en los puntos 1 y 2 de este inciso. Agrega además una breve reflexión sobre las 
+implicaciones éticas que el tipo de tecnología que desarrollaste pudiera tener en la sociedad.
 
-##Solución
+## Resolución
+
+### Gramática
+
+PAOC -> <Parentesis que abre> <Variable> <Parentesis que cierra> OP <Asignacion> M
+  
+AO -> <Variable> <Operador> <Asignacion> M
+  
+PA -> <Parentesis que abre> <Variable> <Parentesis que cierra> <Asignacion> M
+  
+A -> <Variable> <Asignacion> M
+  
+M -> T O C
+  
+C -> <Comentario>
+  
+C -> ɛ
+  
+T -> P
+  
+T -> <Entero>
+  
+T -> <Real>
+  
+T -> <Variable>
+  
+P -> <Parentesis que abre> M <Parentesis que cierra>
+  
+O -> OP M O
+  
+O -> ɛ
+  
+OP -> <Suma>
+  
+OP -> <Resta>
+  
+OP -> <Multiplicacion>
+  
+OP -> <Division>
+  
+OP -> <Potencia>
 
 ### Código
 
