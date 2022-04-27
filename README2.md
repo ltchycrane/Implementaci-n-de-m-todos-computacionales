@@ -19,3 +19,24 @@ Febrero-junio 2022
 #### Fecha:
 
 03 de abril de 2022
+
+## Descripción de la Evidencia:
+
+En equipos de 3 personas:
+
+El Syntax Highlighter utilizará el output de su programa anterior: necesita una lista de tokens la cual va a procesar para poder determinar si el orden es correcto o no.
+Usando el lenguaje de su preferencia, implementen un analizador de sintaxis por método de descenso recursivo
+Pueden tener el ; como token final de cada expresión. Considerar cuando hay comentarios
+El programa debe convertir su entrada en documentos de HTML+CSS que resalten su léxico
+Incluye un README, donde venga la gramática de tu analizador. Y todo lo necesario para ejecutar tu código.
+Utiliza unit testing e incluyelo en tu proyecto
+Utiliza las convenciones de codificación del lenguaje en el que está implementado tu programa (ej.; si estás usando Python, asegurate de seguir el PEP8).
+Realiza un video donde se muestre el correcto funcionamiento de su programa
+Adicionalmente, habrá que hacer una reflexión de manera individual (un documento por miembro de equipo):
+
+Reflexiona sobre la solución planteada, los algoritmos implementados y sobre el tiempo de ejecución de los mismos.
+Calcula la complejidad de tu algoritmo
+Plasma en un breve reporte de una página las conclusiones de tu reflexión en los puntos 1 y 2 de este inciso. Agrega además una breve reflexión sobre las implicaciones éticas que el tipo de tecnología que desarrollaste pudiera tener en la sociedad.
+
+##Solución
+
