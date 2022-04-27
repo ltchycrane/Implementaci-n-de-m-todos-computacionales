@@ -1491,4 +1491,4 @@ Obteniendo así los resultados deseados.
 
 ## Nota para el docente
 
-Para más casos de prueba, se recomienda modificar directamente los archivos de la serie "pruebaN.txt" para no tener que modificar el código.
+Para más casos de prueba, se recomienda modificar directamente los archivos de la serie "pruebaN.txt" para no tener que modificar el código. Solo que el output directo es del último.
