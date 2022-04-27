@@ -94,6 +94,9 @@ OP -> <Potencia>
 El lenguaje utilizado es C++; el código se encuentra escrito en el archivo "main.cpp". Para correr el programa se necesita un compilador que soporte C++11 o versiones 
 posteriores, tal como GCC 4.3 o una versión posterior, y un IDE que use este compilador, como DEV C++.
 
+La descripción  más precisa del código se encuentra en los comentarios del mismo, incluyendo los encabezados de las funciones, sin embargo, aquí se plasma a grandes 
+rasgos qué es lo que hace en orden.
+
 ```C++
 //*******************************************************************************
 // Actividad Integradora 1, Resaltador de sintaxis (evidencia de competencia).
@@ -218,6 +221,8 @@ int main() {
 
 }
 ```
+
+Se hace el unit testing con 4 casos de prueba, en caso de que el programa muestre los resultados correctos, se procede al resaltador de sintaxis.
 
 ## Funciones
 ### lexer
@@ -410,6 +415,8 @@ void lexer() {
   
 }
 ```
+Es el analizador léxico de la actividad pasada.
+
 ### filter
 ```C++
 
@@ -456,6 +463,9 @@ int filter(char c) {
    
 }
 ```
+
+Función de la matriz de transición de la vez pasada.
+
 ### getType
 ```C++
 /*
@@ -499,6 +509,9 @@ string getType(int s) {
 
 }
 ```
+
+Se obtiene el tipo de token (actividad pasada).
+
 ### parser
 ```C++
 
@@ -553,6 +566,8 @@ void parser() {
   
 }
 ```
+Analizador sintáctico.
+
 ### parseMenu
 ```C++
 
@@ -617,6 +632,9 @@ bool parseMenu(vector<string>& tL) {
   
 }
 ```
+
+Implementación de la gramática.
+
 ### parsePAO
 ```C++
 /*
@@ -663,6 +681,9 @@ bool parsePAO(vector<string>& tL) {
 
 }
 ```
+
+Primera regla.
+
 ### parseAO
 ```C++
 /*
@@ -697,6 +718,9 @@ bool parseAO(vector<string>& tL) {
 
 }
 ```
+
+Segunda regla.
+
 ### parsePA
 ```C++
 /*
@@ -740,6 +764,9 @@ bool parsePA(vector<string>& tL) {
 
 }
 ```
+
+Tercera regla.
+
 ### parseA
 ```C++
 /*
@@ -771,6 +798,8 @@ bool parseA(vector<string>& tL) {
 
 }
 ```
+
+Así sucesivamente. Las descripciones de cada una se encuentran en la líneas de código encima de cada función.
 
 ### parseM
 ```C++
@@ -1246,6 +1275,9 @@ void highlightHTML() {
   
 }
 ```
+
+Output en el archivo HTML.
+
 ### unitTesting
 ```C++
 /*
@@ -1362,6 +1394,9 @@ bool unitTesting() {
 
 }
 ```
+
+Pruebas del código.
+
 ### match
 ```C++
 /*
@@ -1385,6 +1420,8 @@ bool match(string trial[]) {
   
 }
 ```
+
+Matches de los resultados esperados vs. reales.
 
 #### Pruebas
 
