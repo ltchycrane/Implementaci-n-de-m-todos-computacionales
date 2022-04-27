@@ -41,3 +41,107 @@ Adicionalmente, habrá que hacer una reflexión de manera individual (un documen
 
 ##Solución
 
+### Código
+
+El lenguaje utilizado es C++; el código se encuentra escrito en el archivo "main.cpp". Para correr el programa se necesita un compilador que soporte C++11 o versiones 
+posteriores, tal como GCC 4.3 o una versión posterior, y un IDE que use este compilador, como DEV C++.
+
+```C++
+//*******************************************************************************
+// Actividad Integradora 1, Resaltador de sintaxis (evidencia de competencia).
+// Programa que recibe como entrada un archivo con una serie de expresiones 
+// aritmeticas, escritas bajo ciertas reglas, y entrega como salida documentos 
+// de HTML+CSS que resalten ese lexico.
+// Creado por: Sergio Alejandro Esparza Gonzalez - A01625430, Alejandro Mauricio
+// Maqueo Huerta - A01620649, Eric Eugenio Oyervides Espino - A01570760.
+// Ultima modificacion realizada el: 26 de abril de 2022.
+//*******************************************************************************
+
+//Librerias:
+#include <iostream> //Flujo de datos.
+#include <vector>   //Vectores.
+#include <fstream>  //Archivos.
+#include <string>   //Cadenas.
+
+//Espacios de nombres:
+using namespace std; //Estandar.
+
+//Constantes:
+const int ERROR = 18; //Estado de error.
+
+//Variables globales:
+ifstream inFile; //Leer datos de un archivo.
+ofstream outFile; //Escribir datos en un archivo.
+int transitionMatrix[19][15] = 
+  { 
+  {6,     7,     8,     9,     10,    13,    11,    12,    14,    15,    15,    
+   ERROR, ERROR, 0,     ERROR},
+  {2,     2,     ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {5,     5,     ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 13,    ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 13,    ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 13,    ERROR, ERROR, ERROR, ERROR, 1,
+   ERROR, 3,     0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 17,    ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 15,    ERROR, ERROR, ERROR, 15,    15,
+   15,    ERROR, 0,     ERROR},
+  {ERROR, ERROR, ERROR, ERROR, ERROR, 16,    ERROR, ERROR, ERROR, ERROR, 4,
+   ERROR, ERROR, 0,     ERROR},
+  {17,    17,    17,    17,    17,    17,    17,    17,    17,    17,    17,
+   17,    17,    17,    17   },
+  {ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
+   ERROR, ERROR, 0,     ERROR}
+  }; //Matriz de transiciones.
+vector< vector< vector<string> > > gruposLineas; //Guarda los tokens y tipos 
+  //linea por linea.
+vector<string> lineasCorrectas; //Indica si la gramatica de una linea es     
+  //correcta o no.
+int nPrueba = 0; //Numero de prueba del codigo.
+
+//Prototipos de funciones:
+void lexer(); //Analizador lexico.
+int filter(char); //Obtener numero de columna de la matriz de transiciones.
+string getType(int); //Obtener el tipo de un token.
+void printVector1D(vector<string>); //Imprimir elementos de un vector de
+  //cadenas de 1 dimension.
+void printVector2D(vector< vector<string> >); //Imprimir elementos de un
+  //vector de cadenas de 2 dimensiones.
+void printVector3D(vector< vector< vector<string> > >); //Imprimir elementos
+  //de un vector de cadenas de 3 dimensiones.
+void parser(); //Analizador sintactico.
+bool parseMenu(vector<string>&); //Comienza el parseo por descenso recursivo.
+bool parsePAO(vector<string>&); //Parseo de la regla PAO.
+bool parsePA(vector<string>&); //Parseo de la regla PA.
+bool parseAO(vector<string>&); //Parseo de la regla AO.
+bool parseA(vector<string>&); //Parseo de la regla A.
+bool parseM(vector<string>&); //Parseo de la regla M.
+bool parseC(vector<string>&); //Parseo de la regla C.
+bool parseT(vector<string>&); //Parseo de la regla T.
+bool parseO(vector<string>&); //Parseo de la regla O.
+bool parseP(vector<string>&); //Parseo de la regla P.
+bool parseOP(vector<string>&); //Parseo de la regla OP.
+void highlightHTML(); //Resaltador de sintaxis.
+bool unitTesting(); //Realizar unit testing.
+bool match(string[]); //Hacer match de resultados reales y esperados.
+```
