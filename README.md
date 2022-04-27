@@ -47,6 +47,26 @@ implicaciones éticas que el tipo de tecnología que desarrollaste pudiera tener
 
 ### Gramática
 
+PAOC -> <Parentesis que abre> <Variable> <Parentesis que cierra> OP <Asignacion> M
+AO -> <Variable> <Operador> <Asignacion> M
+PA -> <Parentesis que abre> <Variable> <Parentesis que cierra> <Asignacion> M
+A -> <Variable> <Asignacion> M
+M -> T O C
+C -> <Comentario>
+C -> ɛ
+T -> P
+T -> <Entero>
+T -> <Real>
+T -> <Variable>
+P -> <Parentesis que abre> M <Parentesis que cierra>
+O -> OP M O
+O -> ɛ
+OP -> <Suma>
+OP -> <Resta>
+OP -> <Multiplicacion>
+OP -> <Division>
+OP -> <Potencia>
+
 ### Código
 
 El lenguaje utilizado es C++; el código se encuentra escrito en el archivo "main.cpp". Para correr el programa se necesita un compilador que soporte C++11 o versiones 
