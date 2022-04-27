@@ -1383,11 +1383,102 @@ bool match(string trial[]) {
 }
 ```
 
-#### Prueba
+#### Pruebas
 
-Utilizando el ejemplo del inicio (en el archivo "prueba.txt"):
+Utilizando el ejemplo del inicio (en el archivo "prueba0.txt"):
+```Bool
 
-![TXT](TXT.png)
+( a ) = 2
+( 8 +  7 - ( 8 * 9 ) - 20 )
+( 8 - ( 4 )
+3 + - 2
+3 + ( -2 )
+3 + -2
+1
+					     
+```
+					     
+Utilizando el ejemplo del inicio (en el archivo "prueba1.txt"):
+```Bool
+
+( 5 )
+(5)
+
+((5))
+( ( 5 ) )
+
+(((6)))
+( ( ( 6 ) ) )
+
+( 6)
+(6 )
+
+( 5 + 6 )
+5 + 6
+					     
+```
+					     
+Utilizando el ejemplo del inicio (en el archivo "prueba2.txt"):
+```Bool
+
+a = 5
+
+b + = 6
+a+ = 7
+a += 5
+
+b =+ 8
+b + = 9
+
+//Com
+
+/ com
+
+Not Com
+
+Alejandro
+Eric
+Alex
+
+( + - )
+( 5 + 6 - 8 )
+					     
+```
+					     
+Utilizando el ejemplo del inicio (en el archivo "prueba3.txt"):
+```Bool
+
+b = 7
+5
+
+6 + 8
+
+7+
+
+a + = 6
+
+2+ 5
+
+( a ) = 7 + 9
+
+( b + 5 ) = 5
+
+b = 7 + ( ( 5 + 8 ) )
+b = 7 + ( ( 5 + 8 )
+
+a = 32.4 * ( -8.6 - b ) / 6.1E-8
+
+d = a ^ b // Esto es un comentario
+
+//Hola
+/ hola
+
+a = //
+
+a = 5 //
+					     
+```					     
+
 
 Al ejecutar el programa, se muestra lo siguiente:
 
