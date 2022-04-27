@@ -1,7 +1,6 @@
-# Actividad 3.2 Programando un DFA
+# Actividad Integradora 1, Resaltador de sintaxis (evidencia de competencia)
 
-![ITESM](https://user-images.githubusercontent.com/72751268/165425399-ae291351-e636-4149-8747-16ef1d941902.jpg)
-
+![ITESM](Tec.jpg)
 
 ## Instituto Tecnológico y de Estudios Superiores de Monterrey Campus Monterrey
 
@@ -19,192 +18,34 @@ Febrero-junio 2022
 
 #### Fecha:
 
-03 de abril de 2022
+26 de abril de 2022
 
 ## Nota importante
 Todos los archivos de esta entrega deberán formar parte de una misma carpeta (no comprimida) para su correcta visualización.
 
-## Propósito
-Una de las aplicaciones de los autómatas finitos determinísticos es la implementación de reconocedores de tokens en un lenguaje de programación (conocido como Lexer en 
-los compiladores).
+## Descripción de la Evidencia
 
-En esta actividad deberás hacer un programa que reciba como entrada un archivo con una serie de expresiones aritméticas, escritas bajo ciertas reglas, y entregará como 
-salida el conjunto de tokens reconocidos, indicando su tipo, o indicando que hay un error en su formación, es decir, no se respetaron las reglas establecidas.
+En equipos de 3 personas:
 
-## Instrucciones
-Hacer un programa que reciba como entrada un archivo de texto que contenga expresiones aritméticas y comentarios, y nos regrese una tabla o lista con cada uno de sus 
-tokens encontrados, en el orden en que fueron encontrados e indicando de qué tipo son. (Pueden usar el lenguaje de programación de su preferencia).
+1. El Syntax Highlighter utilizará el output de su programa anterior: necesita una lista de tokens la cual va a procesar para poder determinar si el orden es correcto 
+o no. 
+2. Usando el lenguaje de su preferencia, implementen un analizador de sintaxis por método de descenso recursivo.
+  - Pueden tener el ; como token final de cada expresión. Considerar cuando hay comentarios.
+3. El programa debe convertir su entrada en documentos de HTML+CSS que resalten su léxico.
+4. Incluye un README, donde venga la gramática de tu analizador. Y todo lo necesario para ejecutar tu código.
+5. Utiliza unit testing e incluyelo en tu proyecto.
+6. Utiliza las convenciones de codificación del lenguaje en el que está implementado tu programa (ej.; si estás usando Python, asegurate de seguir el PEP8).
+7. Realiza un video donde se muestre el correcto funcionamiento de su programa.
 
-### Tipos de tokens
-
-Las expresiones aritméticas sólo podrán contener los siguientes tipos de tokens:
-
-- Enteros
-- Flotantes (Reales)
-- Operadores:
-  - Asignación
-  - Suma
-  - Resta
-  - Multiplicación
-  - División
-  - Potencia
-- Identificadores:
-  - Variables
-- Símbolos especiales:
-  - (
-  - )
-- Comentarios:
-  - // seguido de caracteres hasta que se acabe el renglón
-
-### Entrada
-
-- Un archivo tipo texto que contenga una o más expresiones aritméticas, una por renglón.
-- Los tokens no necesariamente deben estar separados por un blanco, o pueden tener separación de más de un blanco.
-
-Por ejemplo:
-
-b = 7
-
-a = 32.4 * ( -8.6 - b ) / 6.1E-8
-
-d = a ^ b // Esto es un comentario
-
-### Salida
-
-Debe entregar la siguiente salida:
-
-| Token                    | Tipo                  |
-| ------------------------ | --------------------- |
-| b                        | Variable              |
-| =                        | Asignación            |
-| 7                        | Entero                |
-| a                        | Variable              |
-| =                        | Asignación            |
-| 32.4                     | Real                  |
-| *                        | Multiplicación        |
-| (                        | Paréntesis que abre   |
-| -8.6                     | Real                  |
-| -                        | Resta                 |
-| b                        | Variable              |
-| )                        | Paréntesis que cierra |
-| /                        | División              |
-| 6.1E-8                   | Real                  |
-| d                        | Variable              |
-| =                        | Asignación            |
-| a                        | Variable              |
-| ^                        | Potencia              |
-| b                        | Variable              |
-| // Esto es un comentario | Comentario            |
-
-### Reglas de formación de algunos tokens
-
-1. Variables:
-    - Deben empezar con una letra (mayúscula o minúscula).
-    - Sólo están formadas por letras, números y underscore ('_').
-2. Números reales (de punto flotante):
-    - Pueden ser positivos o negativos
-    - Pueden o no tener parte decimal pero deben contener un punto (e.g. 10. o 10.0).
-    - Pueden usar notación exponencial con la letra E, mayúscula o minúscula, pero después de la letra E sólo puede ir un entero positivo o negativo (e.g. 2.3E3, 
-      6.345e-5, -0.001E-3, .467E9).
-3. Comentarios:
-    - Inician con // y todo lo que sigue hasta que termina el renglón es un comentario.
-
-### Algoritmo
-
-- El reconocimiento de tokens se debe hacer por medio de la **tabla de transición** de un Autómata Finito Determinístico. (La tabla puede venir en el README.md o en un 
-  archivo adicional).
-- El diseño del autómata debe ser parte fundamental de la documentación (utilice alguna herramienta computacional para dibujarlo, no lo haga a mano). Deben entregar el 
-  .json para correrlo en automatonsimulator.
-  
-### Documentación:
-
-1. Manual del usuario, indicando cómo correr su programa y qué se obtiene de salida, en qué lenguaje lo hizo y qué tengo que instalar para que funcione (puede ser un README).
-2. El autómata que resuelve el problema (como un anexo del punto 1).
-
-### Nota:
-
-Siempre habrá espacios entre los tokens.
+Adicionalmente, habrá que hacer una reflexión de manera individual (un documento por miembro de equipo):
+1. Reflexiona sobre la solución planteada, los algoritmos implementados y sobre el tiempo de ejecución de los mismos.
+2. Calcula la complejidad de tu algoritmo
+3. Plasma en un breve reporte de una página las conclusiones de tu reflexión en los puntos 1 y 2 de este inciso. Agrega además una breve reflexión sobre las 
+implicaciones éticas que el tipo de tecnología que desarrollaste pudiera tener en la sociedad.
 
 ## Resolución
 
-### Autómata
-
-![Automata](https://user-images.githubusercontent.com/72751268/165425373-f9a057d8-187d-49f4-82da-2839b11adafa.png)
-
-
-Quíntupla:
-
-M = {Q, Σ, δ, q, F}
-
-Donde:
-
-Q = {start, Variable, Suma, Potencia, Resta, Multiplicación, Asignación, Paréntesis que abre, División, Comentario, Paréntesis que cierra, Entero, iExp, dot, Real, 
-iExpS, fExpS, fExp}
-
-Σ = {L, +, ^, #, -, *, =, (, ), /, _, ., e, E, C}
-
-δ = {((start, L), Variable), ((start, +), Suma), ((start, ^), Potencia), ((start, #), Entero), ((start, -), Resta), ((start, *), Multiplicación), ((start, =), 
-Asignación), ((start, (), Paréntesis que abre), ((start, )), Paréntesis que cierra), ((start, /), División), ((Variable, L), Variable), ((Variable, #), Variable), 
-((Variable, _), Variable), ((Suma, #), Entero), ((Resta, #), Entero), ((División, /), Comentario), ((Comentario, L), Comentario), ((Comentario, #), Comentario), 
-((Comentario, +), Comentario), ((Comentario, -), Comentario), ((Comentario, *), Comentario), ((Comentario, /), Comentario), ((Comentario, ^), Comentario), 
-((Comentario, =), Comentario), ((Comentario, C), Comentario), ((Entero, #), Entero), ((Entero, e), iExp), ((Entero, E), iExp), ((Entero, .), dot), ((dot, #), Real), 
-((iExp, +), iExpS), ((iExp, -), iExpS), ((iExp, #), Real), ((Real, #), Real), ((Real, E), fExp), ((Real, e), fExp), ((iExpS, #), Real), ((fExpS, #), Real), ((fExp, +), 
-fExpS), ((fExp, -), fExpS), ((fExp, #), Real)}
-
-q = start
-
-F = {Variable, Suma, Potencia, Resta, Multiplicación, Asignación, Paréntesis que abre, División, Comentario, Paréntesis que cierra, Entero, Real}
-
-El autómata se realizó en Automaton Simulator, no obstante, se tomaron algunas consideraciones (no tomadas en cuenta para el código) que limitan su funcionamiento, 
-pues este software sólo permite un máximo de 10 transiciones de salida por cada estado:
-
-1. En el alfabeto del autómata, 'L' representa cualquier letra del alfabeto inglés.
-2. De igual manera que el punto anterior, '#' Representa cualquier dígito del sistema de numeración decimal.
-3. 'C' representa cualquier otro carácter existente del estándar Unicode, no mencionado explícitamente en el alfabeto del autómata.
-4. Los símbolos 'e' y 'E' del alfabeto, son parte de 'L' por ser letras, sin embargo, para el estado "Entero" se colocaron específicamente estas transiciones, pues son 
-   las únicas letras que acepta para avanzar al estado "iExp".
-5. Caso similar a la consideración 4, para pasar del estado "Real" al estado "fExp".
-6. En el estado de "Comentario", 'C' representa todos los caracteres que no tienen transición a partir de este mismo estado (_, ., (, ), y cualquier otro carácter 
-   Unicode como se mencionó en el punto 3).
-7. Los espacios no son tomados en cuenta, por lo que es mejor que el autómata pruebe token por token en lugar de línea por línea, de un código.
-8. Si un espacio es forzosamente requerido, por ejemplo, en el estado "Comentario", se puede reemplazar por C para poder ser tomado en cuenta.
-9. Similar al punto anterior, tampoco se toman en cuenta tabulaciones, saltos de línea, caracteres vacíos o similares.
-
-Así, por ejemplo, el siguiente código:
-
-b = 7
-
-a = 32.4 * ( -8.6 - b ) / 6.1E-8
-
-d = a ^ b // Esto es un comentario
-
-Se tendría que probar de la siguiente forma:
-
-L = #
-
-L = ##.# * ( -#.# - L ) / #.#E-#
-
-L = L ^ L //CLLLLCLLCLLCLLLLLLLLLL
-
-Y sin olvidar probar token por token (cada palabra separada por espacios, la primera y la última de cada línea).
-
-### Tabla de transiciones
-
-![Matriz](https://user-images.githubusercontent.com/72751268/165425351-0013de66-d009-4884-99f4-d4ab4ba274ae.jpg)
-
-
-En la tabla o matriz de transiciones se muestra lo que hace cada estado en el programa según el carácter que se reciba.
-
-Nótense los siguientes cambios:
-
-1. ‘#’ se representa aquí como el conjunto de los dígitos del 0 al 9 ({0-9}).
-2. Se separan en dos columnas distintas la letra ‘e’ (E || e) y el resto de las letras del alfabeto inglés ({A-D} ∪ {F-Z} ∪ {a-d} ∪ {f-z}).
-3. El carácter espacio (\s) aquí sí es tomado en cuenta.
-4. Todos los demás caracteres no puestos de forma explícita en los encabezados de la tabla de transiciones se representan como “Otro”.
-5. Se tienen las siguientes equivalencias numéricas de estados: 0 = start, 1 = iExp, 2 = iExpS, 3 = dot, 4 = fExp, 5 = fExpS, 6 = Suma, 7 = Resta, 8 = Asignación, 
-   9 = Multiplicación, 10 = Potencia, 11 = Paréntesis que abre, 12 = Paréntesis que cierra, 13 = Entero, 14 = División, 15 = Variable, 16 = Real, 17 = Comentario,
-   18 = Error.
-7. Aquí se añadió el estado “Error”, que es aquel al que va un estado cuando recibe un carácter que no acepta.
+### Gramática
 
 ### Código
 
@@ -560,18 +401,14 @@ imprimir el grupo siguiente en el renglón siguiente.
 
 Utilizando el ejemplo del inicio (en el archivo "prueba.txt"):
 
-![TXT](https://user-images.githubusercontent.com/72751268/165425260-4738eee0-a6d1-4da2-864d-6cfec40de07a.png)
+![TXT](TXT.png)
 
 Al ejecutar el programa, se muestra lo siguiente:
 
-![EXE](https://user-images.githubusercontent.com/72751268/165425292-5874be9f-c3c9-4aba-b5a0-389dea15ddc0.jpg)
+![EXE](EXE.jpg)
 
 Obteniendo así los resultados deseados.
 
 ## Nota para el docente
 
 Para más casos de prueba, se recomienda modificar directamente el archivo "prueba.txt" para no tener que modificar el código.
-
-
-
-
