@@ -145,3 +145,30 @@ void highlightHTML(); //Resaltador de sintaxis.
 bool unitTesting(); //Realizar unit testing.
 bool match(string[]); //Hacer match de resultados reales y esperados.
 ```
+
+## Main
+```C++
+/*
+Funcion principal.
+Parametros: no. 
+Retorno: 0 (int):
+*/
+int main() {
+
+  //Realizar unit testing:
+  if (unitTesting()) { //Si los resultados salen bien...
+    cout << "\nEl programa funciona correctamente." << endl;
+    highlightHTML(); //Se usa el resaltador de sintaxis.
+    
+  }
+    
+  else //Si no...
+    cout << "\nEl programa no funciona como deberia." << endl; //Se indica que
+      //no, y ahí acaba el programa.
+  
+  return 0; //Fin de main.
+
+}
+```
+
+## Funciones
