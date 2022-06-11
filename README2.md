@@ -19,7 +19,7 @@ Febrero-junio 2022
 
 #### Fecha:
 
-26 de abril de 2022
+6 de Junio de 2022
 
 ## Nota importante
 Todos los archivos de esta entrega deberán formar parte de una misma carpeta (no comprimida) para su correcta visualización.
