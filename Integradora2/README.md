@@ -1,4 +1,5 @@
-# Actividad Integradora 1, Resaltador de sintaxis (evidencia de competencia)
+# Actividad Integradora 2, Resaltador de sintaxis paralelo (evidencia de competencia)
+
 
 ## Instituto Tecnológico y de Estudios Superiores de Monterrey Campus Monterrey
 
