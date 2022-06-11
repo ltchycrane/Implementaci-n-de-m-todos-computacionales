@@ -52,6 +52,7 @@ La descripción más precisa del código se encuentra en los comentarios del mis
 
 ### Concurrencia
 
+Para la concurrencia utilizamos threads para hacer cada uno de los procesos, tuvimos que juntar todos los procesos en la función "logica" y corrimos la misma función en cada thread. Cuando el thread acaba (con thread.join()), sigue con el siguiente. Ya que nadamás hacemos un proceso a la vez, no necesitamos tener más de 1 thread activo.  
 ``` cpp
 
 
