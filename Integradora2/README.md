@@ -1206,6 +1206,7 @@ void highlightHTML(vector<string> lineasCorrectas, vector< vector< vector<string
 
 ```
 ### Paralelismo
+Para hacer varios procesos al mismo tiempo, primero leemos los archivos y los contamos. Después de eso, hacemos un vector y vamos añadiendo cada proceso al vector. Se corre un thread por archivo y hasta que se corra por cada archivo, el programa acaba.
 
 ``` cpp
 //*****************************************************************************
