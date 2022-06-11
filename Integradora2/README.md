@@ -54,18 +54,17 @@ La descripción más precisa del código se encuentra en los comentarios del mis
 
 Para la concurrencia utilizamos threads para hacer cada uno de los procesos, tuvimos que juntar todos los procesos en la función "logica" y corrimos la misma función en cada thread. Cuando el thread acaba (con thread.join()), sigue con el siguiente. Ya que nadamás hacemos un proceso a la vez, no necesitamos tener más de 1 thread activo.  
 ``` cpp
-
-
-//*******************************************************************************
+//*****************************************************************************
 // Actividad Integradora 2, Resaltador de sintaxis paralelo (evidencia de
 // competencia)
 // Programa que recibe como entrada un directorio con varios archivos con una
-// serie de expresiones aritmeticas, escritas bajo ciertas reglas, y entrega como
-// salida documentos de HTML+CSS que resalten ese lexico.
-// Creado por: Sergio Alejandro Esparza Gonzalez - A01625430, Alejandro Mauricio
-// Maqueo Huerta - A01620649, Eric Eugenio Oyervides Espino - A01570760.
+// serie de expresiones aritmeticas, escritas bajo ciertas reglas, y entrega
+// como salida documentos de HTML+CSS que resalten ese lexico.
+// Creado por: Sergio Alejandro Esparza Gonzalez - A01625430, Alejandro
+// Mauricio Maqueo Huerta - A01620649, Eric Eugenio Oyervides Espino -
+// A01570760.
 // Ultima modificacion realizada el: 10 de junio de 2022.
-//*******************************************************************************
+//*****************************************************************************
 
 //Librerias:
 #include <iostream>     //Flujo de datos.
@@ -92,7 +91,8 @@ void printVector2D(vector< vector<string> >); //Imprimir elementos de un
   //vector de cadenas de 2 dimensiones.
 void printVector3D(vector< vector< vector<string> > >); //Imprimir elementos
   //de un vector de cadenas de 3 dimensiones.
-void parser(vector< vector< vector<string> > >, string); //Analizador sintactico.
+void parser(vector< vector< vector<string> > >, string); //Analizador
+    //sintactico.
 bool parseMenu(vector<string>&); //Comienza el parseo por descenso recursivo.
 bool parsePAO(vector<string>&); //Parseo de la regla PAO.
 bool parsePA(vector<string>&); //Parseo de la regla PA.
@@ -116,8 +116,8 @@ Retorno: 0 (int):
 */
 int main() {
 
-    vector<string> txts; //Vector que guarda los nombres de los archivos de texto
-    //encontrados.
+    vector<string> txts; //Vector que guarda los nombres de los archivos de
+        //texto encontrados.
 
     string path = "\ActIntegradora2"; //Directorio principal en el que estaran
         //los archivos de texto.
@@ -134,38 +134,14 @@ int main() {
     //cout << "El directorio (y subdirectorios) contiene en total: "
          //<< txts.size() << " archivos con extension \".txt\"" << endl;
 
-    //Son 10 archivos TXT contados.
-    thread hilo0{logica, txts[0]}; //Llamar funcion base del programa dentro de
-                             //un thread.
-    hilo0.join();  //Esperar que el thread termine para pasar a la siguiente
-                   //linea de codigo.
+    //Ejecucion concurrente:
 
-    thread hilo1{logica, txts[1]};
-    hilo1.join();
+    for (int i = 0; i < txts.size(); i++) { //Recorrer todos los archivos:
 
-    thread hilo2{logica, txts[2]};
-    hilo2.join();
+        thread hilo{logica,txts[i]}; //Crear thread.
+        hilo.join(); //Esperar a que termine (asi es un proceso tras otro).
 
-    thread hilo3{logica, txts[3]};
-    hilo3.join();
-
-    thread hilo4{logica, txts[4]};
-    hilo4.join();
-
-    thread hilo5{logica, txts[5]};
-    hilo5.join();
-
-    thread hilo6{logica, txts[6]};
-    hilo6.join();
-
-    thread hilo7{logica, txts[7]};
-    hilo7.join();
-
-    thread hilo8{logica, txts[8]};
-    hilo8.join();
-
-    thread hilo9{logica, txts[9]};
-    hilo9.join();
+    }
 
   return 0; //Fin de main.
 
@@ -181,8 +157,10 @@ void logica(string archivo) {
     cout << "Archivo de entrada: " << archivo << endl;
     lexer(archivo);
     steady_clock::time_point tiempoFinal = steady_clock::now();
-    duration<double> tiempoTranscurrido = duration_cast<duration<double>>(tiempoFinal - tiempoInicial);
-    cout << "Tiempo transcurrido: " << tiempoTranscurrido.count() << " segundos." << endl;
+    duration<double> tiempoTranscurrido = duration_cast<duration<double
+        >>(tiempoFinal - tiempoInicial);
+    cout << "Tiempo transcurrido: " << tiempoTranscurrido.count()
+        << " segundos." << endl;
 
 }
 
@@ -249,7 +227,8 @@ void lexer(string archivo) {
   int cuenta = 0; //Cuenta de tokens en el archivo.
   string value = ""; //Cadena que lmacena todos los caracteres de un token.
   int index = 0; //Indice que va recorriendo cada linea del vector.
-  char c = ' '; //Caracter que va almacenando cada caracter del vector de lineas.
+  char c = ' '; //Caracter que va almacenando cada caracter del vector de
+    //lineas.
   int nLinea = 0; //Iterador que recorre cada elemento del vector de lineas.
   int state = 0; //Entero que indica el estado en el que se encuentra el DFA.
   int past = 0; //Guarda el estado pasado.
@@ -277,13 +256,14 @@ void lexer(string archivo) {
 
   inFile.close(); //Cerrar archivo.
 
-  for (int i = 0; i < lineas.size(); i++) { //Se recorre el vector con las lineas
-    //del archivo...
+  for (int i = 0; i < lineas.size(); i++) { //Se recorre el vector con las
+    //lineas del archivo...
 
-    for (int j = 0; j < lineas.at(i).length(); j ++) { //Se recorre cada linea...
+    for (int j = 0; j < lineas.at(i).length(); j ++) { //Se recorre cada
+                                                       //linea...
 
-      if (lineas.at(i)[j - 1] == ' ' && lineas.at(i)[j] != ' ') //Si el caracter
-        //pasado era un espacio, y el actual no es un espacio...
+      if (lineas.at(i)[j - 1] == ' ' && lineas.at(i)[j] != ' ') //Si el
+        //caracter pasado era un espacio, y el actual no es un espacio...
         cuenta++; //Tenemos un token mas.
       if (lineas.at(i)[j] == '/' && lineas.at(i)[j - 1] == '/') //Si el caracter
         //anterior era un '/', y el caracter actual es un '/'...
@@ -1204,6 +1184,7 @@ void highlightHTML(vector<string> lineasCorrectas, vector< vector< vector<string
 
 }
 
+
 ```
 ### Paralelismo
 Para hacer varios procesos al mismo tiempo, primero leemos los archivos y los contamos. Después de eso, hacemos un vector y vamos añadiendo cada proceso al vector. Se corre un thread por archivo y hasta que se corra por cada archivo, el programa acaba.
@@ -1272,7 +1253,7 @@ Retorno: 0 (int):
 int main() {
 
     vector<string> txts; //Vector que guarda los nombres de los archivos de
-    //texto encontrados.
+        //texto encontrados.
 
     string path = "\ActIntegradora2"; //Directorio principal en el que estaran
         //los archivos de texto.
@@ -1289,45 +1270,36 @@ int main() {
     //cout << "El directorio (y subdirectorios) contiene en total: "
          //<< txts.size() << " archivos con extension \".txt\"" << endl;
 
-    //Son 10 archivos TXT contados.
-    thread hilo0{logica, txts[0]}; //Llamar funcion base del programa dentro
-                             //de un thread.
-    thread hilo1{logica, txts[1]};
-    thread hilo2{logica, txts[2]};
-    thread hilo3{logica, txts[3]};
-    thread hilo4{logica, txts[4]};
-    thread hilo5{logica, txts[5]};
-    thread hilo6{logica, txts[6]};
-    thread hilo7{logica, txts[7]};
-    thread hilo8{logica, txts[8]};
-    thread hilo9{logica, txts[9]};
+    //Ejecucion paralela:
 
-    hilo0.join();
-    hilo1.join();
-    hilo2.join();
-    hilo3.join();
-    hilo4.join();
-    hilo5.join();
-    hilo6.join();
-    hilo7.join();
-    hilo8.join();
-    hilo9.join();
+    vector<thread> threads; //Vector de threads.
 
-  return EXIT_SUCCESS; //Fin de main.
+    for (int i = 0; i < txts.size(); i++) { //Recorrer archivos:
+
+        thread hilo{logica,txts[i]}; //Crear thread.
+        threads.push_back(move(hilo)); //Aniadirlo al vector.
+
+    }
+
+    for (int i = 0; i < txts.size(); i++) { //Recorrer threads:
+
+        threads.at(i).join(); //Esperar a que termine (ahora no es uno tras
+                              //otro).
+
+    }
+
+  return 0; //Fin de main.
 
 }
 
-/*
-Funcion base del programa.
-Parametros: nombre del archivo a analizar (string).
-Retorno: no.
-*/
+/* Funcion base del programa.
+Parametros: no.
+Retorno: no. */
 void logica(string archivo) {
 
     steady_clock::time_point tiempoInicial = steady_clock::now();
     cout << "\nID del proceso: " << this_thread::get_id() << endl;
     cout << "Archivo de entrada: " << archivo << endl;
-    cout << "Dentro de: " << archivo << endl;
     lexer(archivo);
     steady_clock::time_point tiempoFinal = steady_clock::now();
     duration<double> tiempoTranscurrido = duration_cast<duration<double
@@ -1438,19 +1410,19 @@ void lexer(string archivo) {
       if (lineas.at(i)[j - 1] == ' ' && lineas.at(i)[j] != ' ') //Si el
         //caracter pasado era un espacio, y el actual no es un espacio...
         cuenta++; //Tenemos un token mas.
-      if (lineas.at(i)[j] == '/' && lineas.at(i)[j - 1] == '/') //Si el
-        //caracter anterior era un '/', y el caracter actual es un '/'...
+      if (lineas.at(i)[j] == '/' && lineas.at(i)[j - 1] == '/') //Si el caracter
+        //anterior era un '/', y el caracter actual es un '/'...
         j = lineas.at(i).length(); //Nos salimos del ciclo para que no cuente
           //espacios en un comentario.
 
     }
 
-    if (lineas.at(i)[0] != 0 && lineas.at(i)[0] != ' ') // Si el caracter
-      //inicial no es vacio o no es un espacio...
+    if (lineas.at(i)[0] != 0 && lineas.at(i)[0] != ' ') // Si el caracter inicial
+      //no es vacio o no es un espacio...
       cuenta++; //Se agrega otro token a la cuenta (el inicial).
 
-    cuentasLineas.push_back(cuenta); //Se agrega la cuenta de tokens en la
-      //linea al vector que guarda el numero de tokens de todas las lineas.
+    cuentasLineas.push_back(cuenta); //Se agrega la cuenta de tokens en la linea
+      //al vector que guarda el numero de tokens de todas las lineas.
 
     cuenta = 0; //Se reinicia la cuenta para pasar a la siguiente linea.
 
@@ -1465,20 +1437,20 @@ void lexer(string archivo) {
         //anterior en esta iteracion.
       c = lineas.at(nLinea)[index]; //Se obtiene el caracter de una linea.
       index++; //Para pasar al siguiente caracter en la siguiente vuelta.
-      state = transitionMatrix[state][filter(c)]; //Se obtiene el estado actual
-        //de la matriz de transiciones segun c.
+      state = transitionMatrix[state][filter(c)]; //Se obtiene el estado actual de
+        //la matriz de transiciones segun c.
 
       if (state != 0) //Si es un estado diferente al inicial...
         value += c; //Se aniade el caracter actual al token.
 
-      if (state == 0 && index > 0 && past != 0) { //Si se ha llegado a un
-        //espacio, sin que sea el inicio de la cadena o que el caracter
-        //anterior haya sido un espacio...
+      if (state == 0 && index > 0 && past != 0) { //Si se ha llegado a un espacio,
+        //sin que sea el inicio de la cadena o que el caracter anterior haya sido
+        //un espacio...
 
         grupo.push_back(value); //Se almacena el token obtenido en un vector
           //unidimensional.
-        grupo.push_back(getType(past)); //Se almacena el tipo del token, segun
-          //el estado pasado (antes de ser 0) en un vector unidimensional.
+        grupo.push_back(getType(past)); //Se almacena el tipo del token, segun el
+          //estado pasado (antes de ser 0) en un vector unidimensional.
         grupos.push_back(grupo); //Se juntan el token y su tipo en un vector
           //bidimensional.
         grupo.clear(); //Se limpia el vector unidimensional para almacenar otro
@@ -1491,8 +1463,8 @@ void lexer(string archivo) {
         //final de la linea sin que el ultimo estado sea un espacio...
 
         grupo.push_back(value); //Se almacena el token obtenido en el vector 1D.
-        grupo.push_back(getType(state)); //Se almacena en el vector 1D el tipo
-          //del token, segun el estado actual.
+        grupo.push_back(getType(state)); //Se almacena en el vector 1D el tipo del
+          //token, segun el estado actual.
 
         grupos.push_back(grupo); //Se juntan el token y su tipo en un vector 2D.
         grupo.clear(); //Se limpia el vector 1D para almacenar otro token con su
@@ -2267,7 +2239,7 @@ void highlightHTML(vector<string> lineasCorrectas, vector< vector< vector<string
 
 	//Resaltador (HTML):
 
-    cout << "Imprimo: " << archivoNombre << endl;
+    cout << "Archivo de salida: " << archivoNombre << ".html" << endl;
 
 	outFile.open(archivoNombre + ".html"); //Abrir
         //archivo de salida con el mismo nombre al de entrada (pero HTML).
